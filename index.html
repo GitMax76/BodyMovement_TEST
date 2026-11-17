@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodymovement | Viaggi Sportivi, Benessere & Community</title>
+    <meta name="description" content="Parti anche da solo per i migliori viaggi sportivi in Europa: Padel, Yoga, Fitness e nuove amicizie. Conosci il gruppo prima di partire e paga in 3 rate.">
+
+    <!-- Favicon & Icona Mobile (punta direttamente al file logo.png nella root del progetto) -->
+    <link rel="icon" type="image/png" href="./logo.png">
+    <link rel="apple-touch-icon" href="./logo.png">
+    <meta name="theme-color" content="#ff521b">
+
+    <!-- Anteprima Social per WhatsApp, Facebook, LinkedIn, Instagram (Open Graph) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bodymovement">
+    <meta property="og:title" content="Bodymovement • Viaggi Sportivi, Padel, Yoga & Nuove Amicizie">
+    <meta property="og:description" content="Scegli la tua prossima meta (Marbella, Marrakech, Toscana, Canarie), conosci chi ha già prenotato e blocca il tuo posto con un piccolo acconto o in 3 rate.">
+    <meta property="og:image" content="./og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="it_IT">
+
+    <!-- Anteprima Twitter / X & Telegram -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bodymovement • Viaggi Sportivi, Padel & Benessere">
+    <meta name="twitter:description" content="Parti anche da solo: conosci i compagni di viaggio prima della partenza e vivi esperienze sportive indimenticabili.">
+    <meta name="twitter:image" content="./og-preview.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff4f0',
+                            100: '#ffe6dd',
+                            500: '#ff521b', // Energetic Sunset Coral
+                            600: '#e03e0b',
+                            900: '#14171f',
+                        },
+                        teal: {
+                            500: '#0d9488',
+                            600: '#0f766e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar hiding for horizontal filters */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-12">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo Ufficiale Bodymovement (caricato da ./logo.png) -->
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="switchTab('explore')">
+                    <div class="w-11 h-11 rounded-[14px] shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform relative overflow-hidden shrink-0 bg-brand-500">
+                        <img src="./logo.png" alt="Bodymovement Logo" onerror="this.onerror=null; this.src='https://placehold.co/120x120/ff521b/ffffff?text=BM';" class="w-full h-full object-cover scale-[1.28]">
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-none">BODY<span class="text-brand-500">MOVEMENT</span></span>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 mt-0.5 block">Sport • Viaggi • Benessere</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Tabs (Linguaggio naturale) -->
+                <nav class="hidden md:flex items-center space-x-1 bg-slate-100/90 p-1.5 rounded-full border border-slate-200/80">
+                    <button onclick="switchTab('explore')" id="nav-explore" class="nav-btn px-5 py-2 rounded-full text-sm font-semibold bg-white text-slate-900 shadow-sm transition-all">
+                        Esplora Viaggi
+                    </button>
+                    <button onclick="switchTab('community')" id="nav-community" class="nav-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">
+                        <span>Compagni di Viaggio</span>
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    </button>
+                    <button onclick="switchTab('workouts')" id="nav-workouts" class="nav-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 transition-all">
+                        Allenati con Noi
+                    </button>
+                    <button onclick="switchTab('bookings')" id="nav-bookings" class="nav-btn px-5 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5">
+                        <span>I Miei Biglietti</span>
+                        <span id="booking-badge" class="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded-full font-bold">1</span>
+                    </button>
+                </nav>
+
+                <!-- Right Actions (Area Organizzatore & Profilo) -->
+                <div class="flex items-center gap-2.5 sm:gap-3">
+                    <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-brand-600 bg-slate-100 hover:bg-brand-50 px-3.5 py-2.5 rounded-full border border-slate-200 transition-all">
+                        <i data-lucide="sliders-horizontal" class="w-4 h-4 text-brand-500"></i>
+                        <span class="hidden sm:inline">Area Organizzatore</span>
+                        <span class="sm:hidden">Admin</span>
+                    </button>
+                    <div class="flex items-center gap-2 pl-2 border-l border-slate-200 cursor-pointer" onclick="switchTab('bookings')">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User Profile" class="w-9 h-9 rounded-full object-cover ring-2 ring-brand-500/40">
+                        <div class="hidden lg:block text-left">
+                            <p class="text-xs font-bold text-slate-800 leading-tight">Elena R.</p>
+                            <p class="text-[11px] text-teal-600 font-semibold flex items-center gap-0.5">
+                                <i data-lucide="badge-check" class="w-3 h-3"></i> Profilo Verificato
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: ESPLORA VIAGGI (BOOKING + DHONKO)  -->
+        <!-- ========================================== -->
+        <section id="view-explore" class="space-y-8">
+            
+            <!-- Hero Search Bar -->
+            <div class="bg-gradient-to-br from-brand-900 via-slate-900 to-slate-800 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-80 h-80 bg-brand-500/25 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold text-amber-300 mb-4 border border-white/10">
+                        <i data-lucide="sun" class="w-3.5 h-3.5"></i>
+                        <span>Parti anche da solo: conosci il gruppo prima della partenza</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-3">
+                        Viaggi sportivi ed esperienze da <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-400">vivere insieme.</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 max-w-2xl">
+                        Scegli il tuo sport preferito, guarda chi altro ha già prenotato e blocca il tuo posto con un piccolo acconto o in 3 rate senza interessi.
+                    </p>
+                </div>
+
+                <!-- Interactive Search Filter Box -->
+                <div class="relative z-10 bg-white rounded-2xl p-3 shadow-lg text-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
+                    <!-- Destinazione -->
+                    <div class="p-2.5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-200 transition-all">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Dove vuoi andare?</label>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brand-500 shrink-0"></i>
+                            <select id="filter-location" onchange="filterEvents()" class="w-full text-sm font-semibold bg-transparent focus:outline-none text-slate-800 cursor-pointer">
+                                <option value="all">Tutte le mete</option>
+                                <option value="Spagna">Spagna (Marbella / Ibiza)</option>
+                                <option value="Marocco">Marocco (Marrakech & Deserto)</option>
+                                <option value="Italia">Italia (Toscana / Costiera)</option>
+                                <option value="Canarie">Isole Canarie (Fuerteventura)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Disciplina -->
+                    <div class="p-2.5 rounded-xl hover:bg-slate-50 border-t sm:border-t-0 sm:border-l border-slate-100 transition-all">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Sport & Attività</label>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="dumbbell" class="w-4 h-4 text-brand-500 shrink-0"></i>
+                            <select id="filter-discipline" onchange="filterEvents()" class="w-full text-sm font-semibold bg-transparent focus:outline-none text-slate-800 cursor-pointer">
+                                <option value="all">Tutti gli sport</option>
+                                <option value="Padel">Padel & Tornei</option>
+                                <option value="Yoga">Yoga & Benessere</option>
+                                <option value="Fitness">Fitness & Allenamento</option>
+                                <option value="Multisport">Avventura & Multisport</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tipologia Format -->
+                    <div class="p-2.5 rounded-xl hover:bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-100 transition-all">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Tipo di Esperienza</label>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4 text-teal-600 shrink-0"></i>
+                            <select id="filter-format" onchange="filterEvents()" class="w-full text-sm font-semibold bg-transparent focus:outline-none text-slate-800 cursor-pointer">
+                                <option value="all">Tutte le formule</option>
+                                <option value="Vacanza Sportiva">Vacanza Sportiva (4-7 gg)</option>
+                                <option value="Viaggio di Gruppo">Viaggio di Gruppo & Social</option>
+                                <option value="Weekend">Weekend & Clinic</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="h-full flex items-center">
+                        <button onclick="filterEvents()" class="w-full h-full min-h-[48px] bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl px-6 py-3 flex items-center justify-center gap-2 shadow-md shadow-brand-500/25 transition-all active:scale-[0.98]">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            <span>Trova il tuo Viaggio</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Pills Bar -->
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+                    <button onclick="quickDiscipline('all', this)" class="pill-btn px-4 py-2 rounded-full text-xs font-bold bg-slate-900 text-white whitespace-nowrap transition-all">
+                        Tutti i viaggi
+                    </button>
+                    <button onclick="quickDiscipline('Padel', this)" class="pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 whitespace-nowrap transition-all">
+                        🎾 Padel & Mare
+                    </button>
+                    <button onclick="quickDiscipline('Yoga', this)" class="pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 whitespace-nowrap transition-all">
+                        🧘‍♀️ Yoga & Relax
+                    </button>
+                    <button onclick="quickDiscipline('Fitness', this)" class="pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 whitespace-nowrap transition-all">
+                        🔥 Fitness & Energia
+                    </button>
+                    <button onclick="quickDiscipline('Multisport', this)" class="pill-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-slate-700 border border-slate-200 hover:border-brand-500 whitespace-nowrap transition-all">
+                        🐪 Avventura & Natura
+                    </button>
+                </div>
+                <span id="results-count" class="hidden sm:inline-block text-xs font-semibold text-slate-500 shrink-0">4 viaggi disponibili</span>
+            </div>
+
+            <!-- Events Grid -->
+            <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Populated dynamically via JS -->
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: COMPAGNI DI VIAGGIO (SOCIAL)       -->
+        <!-- ========================================== -->
+        <section id="view-community" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-teal-600">Viaggia in Compagnia</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">Conosci il gruppo prima di fare la valigia</h2>
+                    <p class="text-sm text-slate-500 mt-1">Oltre il 65% dei nostri viaggiatori parte da solo. Qui puoi conoscere chi ha già prenotato, scegliere lo stesso volo e condividere la camera.</p>
+                </div>
+                <div class="flex items-center gap-2.5 bg-teal-50 text-teal-800 px-4 py-3 rounded-2xl border border-teal-200 text-xs font-semibold shrink-0">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-teal-600 shrink-0"></i>
+                    <span>Tutti i partecipanti sono verificati con documento</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Active Travelers -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+                        <i data-lucide="users" class="w-5 h-5 text-brand-500"></i>
+                        <span>Persone già iscritte ai prossimi viaggi</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Traveler Card 1 -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" class="w-12 h-12 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 flex items-center gap-1">
+                                            Marco V., 32 <i data-lucide="badge-check" class="w-4 h-4 text-teal-500"></i>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">Milano • Gioca a Padel</p>
+                                    </div>
+                                </div>
+                                <span class="bg-brand-50 text-brand-600 text-[11px] font-bold px-2.5 py-1 rounded-full">Affinità 94%</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                                "Parto da Malpensa per Marbella 2027! Cerco compagno o compagna per giocare il torneo di doppio e dividere il taxi dall'aeroporto."
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md font-medium">🎾 Padel</span>
+                                <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md font-medium">✈️ Parte da Milano</span>
+                                <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md font-medium">🍷 Aperitivi</span>
+                            </div>
+                            <button onclick="showToast('Hai inviato un saluto a Marco!')" class="w-full mt-4 py-2.5 rounded-xl border border-slate-200 hover:border-brand-500 hover:text-brand-600 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Saluta e scrivi in privato
+                            </button>
+                        </div>
+
+                        <!-- Traveler Card 2 -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" class="w-12 h-12 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 flex items-center gap-1">
+                                            Chiara B., 29 <i data-lucide="badge-check" class="w-4 h-4 text-teal-500"></i>
+                                        </h4>
+                                        <p class="text-xs text-slate-500">Roma • Yoga & Fitness</p>
+                                    </div>
+                                </div>
+                                <span class="bg-brand-50 text-brand-600 text-[11px] font-bold px-2.5 py-1 rounded-full">Affinità 89%</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                                "Secondo viaggio con Bodymovement dopo Fuerteventura! Parto da sola e cerco una compagna di stanza per il viaggio a Marrakech."
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md font-medium">🧘‍♀️ Yoga</span>
+                                <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md font-medium">🛏️ Cerca compagna camera</span>
+                            </div>
+                            <button onclick="showToast('Hai inviato un saluto a Chiara!')" class="w-full mt-4 py-2.5 rounded-xl border border-slate-200 hover:border-brand-500 hover:text-brand-600 text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Saluta e scrivi in privato
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live Group Chat (Saved in LocalStorage) -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col h-[460px] overflow-hidden">
+                    <div class="p-4 bg-brand-900 text-white flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center font-bold text-sm">MB</div>
+                            <div>
+                                <h4 class="text-sm font-bold leading-tight">Gruppo Marbella 2027 🇪🇸</h4>
+                                <p class="text-[11px] text-emerald-400">68 iscritti • 14 online ora</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-white/10 px-2.5 py-1 rounded-md font-semibold">Chat Viaggio</span>
+                    </div>
+
+                    <div id="chat-messages" class="flex-1 p-4 space-y-3 overflow-y-auto bg-slate-50 text-xs">
+                        <!-- Populated via JS / LocalStorage -->
+                    </div>
+
+                    <form onsubmit="sendChatMessage(event)" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                        <input id="chat-input" type="text" placeholder="Scrivi un messaggio al gruppo..." class="flex-1 text-xs bg-slate-100 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white p-2.5 rounded-xl transition-colors">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: ALLENATI CON NOI (NO TERMINE SAAS) -->
+        <!-- ========================================== -->
+        <section id="view-workouts" class="hidden space-y-6">
+            <div class="bg-gradient-to-r from-teal-700 to-brand-900 rounded-3xl p-6 sm:p-8 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div class="max-w-xl">
+                    <span class="bg-teal-500/30 border border-teal-400/30 text-teal-200 text-xs font-bold px-3 py-1 rounded-full">Allenamento & Preparazione</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-3">Arriva al viaggio già in forma e resta attivo tutto l'anno</h2>
+                    <p class="text-sm text-slate-200 mt-2">
+                        Video-allenamenti guidati dai nostri istruttori, esercizi di mobilità per il Padel e consigli alimentari semplici per prepararti alla partenza.
+                    </p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/15 p-4 rounded-2xl shrink-0 w-full md:w-auto">
+                    <p class="text-xs text-teal-200 font-semibold">Accesso Completo Club</p>
+                    <p class="text-2xl font-extrabold mt-0.5">€ 9,99 <span class="text-xs font-normal text-slate-300">/ mese</span></p>
+                    <p class="text-[11px] text-emerald-300 mt-1 flex items-center gap-1">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Gratis se prenoti un viaggio
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Workout Card 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
+                    <div class="relative h-44 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-emerald-500 text-white text-[11px] font-bold px-2.5 py-1 rounded-full">GRATUITO</span>
+                        <button onclick="showToast('Avvio video: Preparazione Marbella - Settimana 1')" class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-white/90 text-brand-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+                            <span>Tonificazione • 35 min</span>
+                            <span>Adatto a tutti</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900">Obiettivo Marbella: Energia & Resistenza</h3>
+                        <p class="text-xs text-slate-500 mt-1">Con Coach Alessandro • Circuito a corpo libero da fare anche a casa.</p>
+                    </div>
+                </div>
+
+                <!-- Workout Card 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
+                    <div class="relative h-44 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i> RISERVATO CLUB
+                        </span>
+                        <button onclick="showToast('Video sbloccato grazie alla tua prenotazione!')" class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-white/90 text-brand-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="play" class="w-5 h-5 fill-current ml-0.5"></i>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+                            <span>Stretching & Yoga • 25 min</span>
+                            <span>Tutti i livelli</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900">Yoga Defaticante Post-Partita</h3>
+                        <p class="text-xs text-slate-500 mt-1">Con Martina • Perfetto per sciogliere spalle e schiena dopo il Padel.</p>
+                    </div>
+                </div>
+
+                <!-- Workout Card 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm group">
+                    <div class="relative h-44 bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-3 left-3 bg-slate-900/80 text-amber-300 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i> RISERVATO CLUB
+                        </span>
+                        <button onclick="showToast('Download Guida Alimentare avviato')" class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-white/90 text-teal-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="file-text" class="w-5 h-5"></i>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+                            <span>Alimentazione • Guida PDF</span>
+                            <span>4 Settimane</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900">Cosa Mangiare Prima e Durante il Viaggio</h3>
+                        <p class="text-xs text-slate-500 mt-1">Consigli pratici e ricette veloci per avere sempre la giusta carica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 4: I MIEI BIGLIETTI & QR PASS         -->
+        <!-- ========================================== -->
+        <section id="view-bookings" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900">I Miei Biglietti & Prenotazioni</h2>
+                    <p class="text-sm text-slate-500">Controlla lo stato dei tuoi pagamenti, scarica i documenti di viaggio e mostra il codice QR all'arrivo.</p>
+                </div>
+            </div>
+
+            <div id="user-bookings-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Populated dynamically from LocalStorage -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW 5: AREA AMMINISTRAZIONE COMPLETA      -->
+        <!-- ========================================== -->
+        <section id="view-admin" class="hidden space-y-8">
+            <!-- Admin Header Banner -->
+            <div class="bg-brand-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-lg">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-brand-500/20 border border-brand-500/30 text-brand-300 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                        <i data-lucide="shield" class="w-3.5 h-3.5"></i> Pannello di Controllo Bodymovement
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Gestione Viaggi, Incassi e Partecipanti</h2>
+                    <p class="text-sm text-slate-300 mt-1">Pubblica nuove esperienze (appariranno subito nella home per gli utenti) e monitora l'andamento delle iscrizioni.</p>
+                </div>
+                <button onclick="resetDemoData()" class="text-xs font-semibold bg-white/10 hover:bg-white/20 text-slate-200 px-4 py-2.5 rounded-xl border border-white/15 transition-colors flex items-center gap-1.5 shrink-0">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Ripristina Dati Iniziali
+                </button>
+            </div>
+
+            <!-- KPI Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-400 mb-2">
+                        <span class="text-xs font-bold uppercase">Viaggi Pubblicati</span>
+                        <i data-lucide="map" class="w-4 h-4 text-brand-500"></i>
+                    </div>
+                    <p id="admin-stat-events" class="text-3xl font-extrabold text-slate-900">4</p>
+                    <p class="text-xs text-emerald-600 font-semibold mt-1">Attivi e prenotabili online</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-400 mb-2">
+                        <span class="text-xs font-bold uppercase">Partecipanti Totali</span>
+                        <i data-lucide="users" class="w-4 h-4 text-teal-600"></i>
+                    </div>
+                    <p id="admin-stat-pax" class="text-3xl font-extrabold text-slate-900">260</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">Su 300 posti complessivi</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-400 mb-2">
+                        <span class="text-xs font-bold uppercase">Valore Prenotazioni</span>
+                        <i data-lucide="wallet" class="w-4 h-4 text-amber-500"></i>
+                    </div>
+                    <p id="admin-stat-revenue" class="text-3xl font-extrabold text-slate-900">€ 168.400</p>
+                    <p class="text-xs text-emerald-600 font-semibold mt-1">Acconti + Rate in corso</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-400 mb-2">
+                        <span class="text-xs font-bold uppercase">Clienti che Tornano</span>
+                        <i data-lucide="repeat" class="w-4 h-4 text-brand-500"></i>
+                    </div>
+                    <p class="text-3xl font-extrabold text-slate-900">34%</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">Media ultimi 5 eventi</p>
+                </div>
+            </div>
+
+            <!-- Main Admin Grid: Create New Event Form + Active Events Management -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left 5 Cols: Form Crea Nuova Esperienza -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm h-fit">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-slate-100">
+                        <div class="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+                            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-base text-slate-900">Pubblica Nuovo Viaggio / Evento</h3>
+                            <p class="text-xs text-slate-500">Verrà salvato e reso subito visibile agli utenti</p>
+                        </div>
+                    </div>
+
+                    <form onsubmit="createNewEvent(event)" class="space-y-4 text-xs">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Titolo del Viaggio *</label>
+                            <input id="new-title" type="text" required placeholder="Es. Ibiza Padel & Sunset Camp 2027" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Nazione / Area *</label>
+                                <select id="new-location" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                                    <option value="Spagna">Spagna</option>
+                                    <option value="Italia">Italia</option>
+                                    <option value="Marocco">Marocco</option>
+                                    <option value="Canarie">Canarie</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Città / Località *</label>
+                                <input id="new-city" type="text" required placeholder="Es. Santa Eulalia, Ibiza" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Sport Principale *</label>
+                                <select id="new-discipline" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                                    <option value="Padel">Padel</option>
+                                    <option value="Yoga">Yoga</option>
+                                    <option value="Fitness">Fitness</option>
+                                    <option value="Multisport">Multisport</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Formula Viaggio *</label>
+                                <select id="new-format" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                                    <option value="Vacanza Sportiva">Vacanza Sportiva</option>
+                                    <option value="Viaggio di Gruppo">Viaggio di Gruppo</option>
+                                    <option value="Weekend">Weekend</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-2">
+                                <label class="block font-bold text-slate-700 mb-1">Date e Durata *</label>
+                                <input id="new-dates" type="text" required placeholder="Es. 12 – 16 Luglio 2027 • 4 Giorni" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Prezzo (€) *</label>
+                                <input id="new-price" type="number" required min="99" value="650" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-bold">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Posti Disponibili *</label>
+                                <input id="new-spots" type="number" required min="5" max="200" value="40" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">Istruttore / Host *</label>
+                                <input id="new-host" type="text" required value="Alex & Staff BM" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Descrizione Programma (Giorno 1 - Giorno Finale)</label>
+                            <textarea id="new-desc" rows="2" required placeholder="Es. Arrivo e welcome drink, 10 ore di clinic sportivo, escursione in barca e festa finale sulla spiaggia." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-brand-500 font-medium"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2 text-sm">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>Pubblica Ora sull'App</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right 7 Cols: Lista Viaggi Attivi e Azioni Rapide -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-extrabold text-base text-slate-900">Catalogo Viaggi in Vendita</h3>
+                            <span class="text-xs text-slate-400">Aggiornato in tempo reale</span>
+                        </div>
+                        <div id="admin-events-list" class="space-y-3">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Strumenti Operativi Staff -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="showToast('Avviso inviato via notifica a tutti i partecipanti in partenza!')" class="bg-white p-4 rounded-2xl border border-slate-200 hover:border-brand-500 text-left flex items-center gap-3.5 shadow-sm transition-all">
+                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center shrink-0">
+                                <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-extrabold text-slate-900">Invia Avviso ai Partecipanti</p>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Comunica orari ritrovo o cambi campo</p>
+                            </div>
+                        </button>
+                        <button onclick="showToast('File Excel con camere, taglie magliette e allergie scaricato!')" class="bg-white p-4 rounded-2xl border border-slate-200 hover:border-teal-600 text-left flex items-center gap-3.5 shadow-sm transition-all">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center shrink-0">
+                                <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-extrabold text-slate-900">Scarica Lista per l'Hotel</p>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Camere, intolleranze e taglie kit</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- MODAL DETTAGLIO VIAGGIO + PRENOTAZIONE     -->
+    <!-- ========================================== -->
+    <div id="event-modal" class="fixed inset-0 z-50 hidden bg-slate-900/75 backdrop-blur-sm overflow-y-auto p-3 sm:p-6">
+        <div class="bg-white max-w-4xl mx-auto rounded-3xl shadow-2xl overflow-hidden my-4">
+            <!-- Modal Header Image -->
+            <div class="relative h-64 sm:h-80 bg-slate-900">
+                <img id="modal-img" src="" alt="Event cover" class="w-full h-full object-cover opacity-90">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent"></div>
+                <button onclick="closeEventModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/95 hover:bg-white text-slate-900 flex items-center justify-center shadow-lg transition-transform hover:scale-105">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="absolute bottom-5 left-6 right-6 text-white">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <span id="modal-badge" class="bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full"></span>
+                        <span id="modal-spots" class="bg-white/20 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full"></span>
+                    </div>
+                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold"></h2>
+                    <p id="modal-subtitle" class="text-sm text-slate-200 mt-1 flex items-center gap-2"></p>
+                </div>
+            </div>
+
+            <!-- Modal Body: 2 Columns -->
+            <div class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left 2 Cols: Info, Host Verificato & Programma -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Host / Master Trainer Card -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-3.5">
+                            <img id="modal-host-img" src="" class="w-12 h-12 rounded-full object-cover ring-2 ring-teal-500">
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span id="modal-host-name" class="font-bold text-slate-900 text-sm"></span>
+                                    <span class="bg-teal-100 text-teal-800 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                                        <i data-lucide="badge-check" class="w-3 h-3"></i> Accompagnatore Verificato
+                                    </span>
+                                </div>
+                                <p id="modal-host-role" class="text-xs text-slate-500 mt-0.5"></p>
+                            </div>
+                        </div>
+                        <div class="text-right hidden sm:block">
+                            <div class="text-xs font-bold text-amber-500">★★★★★ 4.9</div>
+                            <div class="text-[11px] text-slate-400">12 viaggi guidati</div>
+                        </div>
+                    </div>
+
+                    <!-- Chi partecipa già -->
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">Chi ha già prenotato questo viaggio</h4>
+                        <div class="flex items-center justify-between bg-brand-50/70 border border-brand-100 p-3.5 rounded-2xl">
+                            <div class="flex items-center -space-x-2.5">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" class="w-9 h-9 rounded-full object-cover ring-2 ring-white">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" class="w-9 h-9 rounded-full object-cover ring-2 ring-white">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" class="w-9 h-9 rounded-full object-cover ring-2 ring-white">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80" class="w-9 h-9 rounded-full object-cover ring-2 ring-white">
+                                <div id="modal-booked-count" class="w-9 h-9 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">+42</div>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-700">Età media 27-38 • 65% parte da solo</span>
+                        </div>
+                    </div>
+
+                    <!-- Programma Giorno per Giorno -->
+                    <div>
+                        <h3 class="font-extrabold text-lg text-slate-900 mb-3">Programma Giorno per Giorno</h3>
+                        <div id="modal-timeline" class="space-y-3 border-l-2 border-brand-200 ml-2.5 pl-4">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Cosa è incluso -->
+                    <div>
+                        <h3 class="font-extrabold text-xs uppercase tracking-wider text-slate-400 mb-2.5">Cosa comprende la quota</h3>
+                        <div class="grid grid-cols-2 gap-2.5 text-xs text-slate-700 font-medium">
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Resort 4★ & Colazione</div>
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Lezioni Sportive & Tornei</div>
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Kit Abbigliamento Omaggio</div>
+                            <div class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-500"></i> Escursione & Cena di Gruppo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Col: Prenotazione Flessibile -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 h-fit space-y-4">
+                    <div>
+                        <span class="text-xs text-slate-500 font-medium">Quota individuale tutto incluso</span>
+                        <div class="flex items-baseline gap-2 mt-0.5">
+                            <span id="modal-price" class="text-3xl font-extrabold text-slate-900"></span>
+                            <span class="text-xs text-slate-400 line-through">€ 820</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Selector -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700">Scegli come preferisci pagare:</label>
+                        
+                        <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white border-2 border-brand-500 cursor-pointer">
+                            <input type="radio" name="pay_mode" value="3 Rate senza interessi" checked class="mt-0.5 text-brand-500 focus:ring-brand-500">
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-900 block">3 Rate senza interessi</span>
+                                <span id="modal-installment-text" class="text-slate-500">Subito € 230 con Klarna / Scalapay</span>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 cursor-pointer">
+                            <input type="radio" name="pay_mode" value="Acconto 30%" class="mt-0.5 text-brand-500 focus:ring-brand-500">
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-900 block">Blocca con Acconto (30%)</span>
+                                <span id="modal-deposit-text" class="text-slate-500">Saldo 30 giorni prima di partire</span>
+                            </div>
+                        </label>
+
+                        <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 cursor-pointer">
+                            <input type="radio" name="pay_mode" value="Saldo Unico" class="mt-0.5 text-brand-500 focus:ring-brand-500">
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-900 block">Pagamento Unico</span>
+                                <span class="text-emerald-600 font-semibold">Ricevi 1 gadget extra in omaggio</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button id="confirm-booking-btn" onclick="confirmBooking()" class="w-full py-3.5 px-4 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 transition-all text-sm flex items-center justify-center gap-2">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                        <span>Blocca il tuo Posto</span>
+                    </button>
+
+                    <p class="text-[11px] text-center text-slate-400 flex items-center justify-center gap-1">
+                        <i data-lucide="shield" class="w-3.5 h-3.5 text-teal-600"></i> Cancellazione gratuita fino a 45 gg prima
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 z-40 flex justify-around items-center py-2 px-1 shadow-lg">
+        <button onclick="switchTab('explore')" class="mob-nav flex flex-col items-center p-1.5 text-brand-500 font-bold text-[10px]">
+            <i data-lucide="compass" class="w-5 h-5 mb-0.5"></i>
+            <span>Viaggi</span>
+        </button>
+        <button onclick="switchTab('community')" class="mob-nav flex flex-col items-center p-1.5 text-slate-500 font-medium text-[10px]">
+            <i data-lucide="users" class="w-5 h-5 mb-0.5"></i>
+            <span>Compagni</span>
+        </button>
+        <button onclick="switchTab('workouts')" class="mob-nav flex flex-col items-center p-1.5 text-slate-500 font-medium text-[10px]">
+            <i data-lucide="dumbbell" class="w-5 h-5 mb-0.5"></i>
+            <span>Allenati</span>
+        </button>
+        <button onclick="switchTab('bookings')" class="mob-nav flex flex-col items-center p-1.5 text-slate-500 font-medium text-[10px]">
+            <i data-lucide="ticket" class="w-5 h-5 mb-0.5"></i>
+            <span>Biglietti</span>
+        </button>
+        <button onclick="switchTab('admin')" class="mob-nav flex flex-col items-center p-1.5 text-slate-500 font-medium text-[10px]">
+            <i data-lucide="sliders-horizontal" class="w-5 h-5 mb-0.5"></i>
+            <span>Admin</span>
+        </button>
+    </nav>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 bg-brand-900 text-white px-4 py-3.5 rounded-2xl shadow-xl border border-slate-700 text-xs font-semibold flex items-center gap-2.5 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+        <span id="toast-msg">Operazione completata</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC WITH LOCALSTORAGE PERSISTENCE -->
+    <script>
+        const STORAGE_KEYS = {
+            EVENTS: 'bm_demo_events_v1',
+            BOOKINGS: 'bm_demo_bookings_v1',
+            CHAT: 'bm_demo_chat_v1'
+        };
+
+        // Default Initial Events
+        const defaultEvents = [
+            {
+                id: 1,
+                title: "Marbella Padel & Wellness Retreat 2027",
+                location: "Spagna",
+                city: "Marbella, Andalusia",
+                dates: "14 – 18 Maggio 2027 • 4 Giorni",
+                discipline: "Padel",
+                format: "Vacanza Sportiva",
+                price: 690,
+                spotsLeft: 12,
+                totalSpots: 100,
+                image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=900&q=80",
+                hostName: "Alex & Team FIT",
+                hostRole: "Responsabile Sport & Maestri Padel",
+                hostImg: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=120&q=80",
+                tags: ["12 ore di Padel", "Beach Club", "Ideale per chi parte solo"],
+                timeline: [
+                    { day: "Giorno 1", desc: "Arrivo a Malaga, transfer in Resort 4★, test livello in campo e Aperitivo di Benvenuto al tramonto." },
+                    { day: "Giorno 2", desc: "Mattina: Lezioni tecniche in campo. Pomeriggio: Torneo a squadre e serata tapas a Puerto Banús." },
+                    { day: "Giorno 3", desc: "Stretching in spiaggia, sfide con ospiti speciali e White Party finale." },
+                    { day: "Giorno 4", desc: "Colazione vista mare, finali del torneo e rientro in Italia." }
+                ]
+            },
+            {
+                id: 2,
+                title: "Marrakech & Deserto di Agafay Active Escape",
+                location: "Marocco",
+                city: "Marrakech & Deserto di Agafay",
+                dates: "10 – 14 Ottobre 2027 • 4 Giorni",
+                discipline: "Multisport",
+                format: "Viaggio di Gruppo",
+                price: 740,
+                spotsLeft: 8,
+                totalSpots: 80,
+                image: "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=900&q=80",
+                hostName: "Martina & Coach Leo",
+                hostRole: "Insegnante Yoga & Personal Trainer",
+                hostImg: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80",
+                tags: ["Yoga all'Alba", "Allenamento nel Deserto", "Notte in Campo Tendato"],
+                timeline: [
+                    { day: "Giorno 1", desc: "Arrivo in Riad esclusivo, visita guidata nella Medina e cena tipica marocchina." },
+                    { day: "Giorno 2", desc: "Allenamento al mattino, escursione in quad sulle dune e notte sotto le stelle nel deserto." },
+                    { day: "Giorno 3", desc: "Yoga all'alba tra le dune, hammam rilassante e festa sotto le stelle." },
+                    { day: "Giorno 4", desc: "Colazione in terrazza panoramica e trasferimento in aeroporto." }
+                ]
+            },
+            {
+                id: 3,
+                title: "Toscana Eco-Resort: Yoga, Pilates & Vino",
+                location: "Italia",
+                city: "Castagneto Carducci, Toscana",
+                dates: "18 – 21 Giugno 2027 • 4 Giorni",
+                discipline: "Yoga",
+                format: "Vacanza Sportiva",
+                price: 540,
+                spotsLeft: 15,
+                totalSpots: 60,
+                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80",
+                hostName: "Elena M.",
+                hostRole: "Istruttrice Certificata Yoga & Pilates",
+                hostImg: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80",
+                tags: ["Pineta & Mare", "Degustazione a Bolgheri", "Relax"],
+                timeline: [
+                    { day: "Giorno 1", desc: "Accoglienza al Resort immerso nella pineta e pratica rilassante al tramonto." },
+                    { day: "Giorno 2", desc: "Pilates al mattino, pomeriggio in spiaggia privata e degustazione vini a Bolgheri." },
+                    { day: "Giorno 3", desc: "Yoga in riva al mare e cena toscana a km zero con tutto il gruppo." },
+                    { day: "Giorno 4", desc: "Pratica di chiusura, brunch e saluti." }
+                ]
+            },
+            {
+                id: 4,
+                title: "Fuerteventura Surf, Fitness & Sunset Camp",
+                location: "Canarie",
+                city: "Corralejo, Fuerteventura",
+                dates: "05 – 09 Novembre 2027 • 4 Giorni",
+                discipline: "Fitness",
+                format: "Viaggio di Gruppo",
+                price: 620,
+                spotsLeft: 5,
+                totalSpots: 60,
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+                hostName: "Davide R.",
+                hostRole: "Preparatore Atletico & Coach",
+                hostImg: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80",
+                tags: ["Allenamento in Spiaggia", "Lezione di Surf", "Oceano"],
+                timeline: [
+                    { day: "Giorno 1", desc: "Arrivo a Fuerteventura, sistemazione in Villa e primo allenamento al tramonto." },
+                    { day: "Giorno 2", desc: "Mattina: Corso di Surf per tutti i livelli. Pomeriggio: Sfida a squadre sulle dune." },
+                    { day: "Giorno 3", desc: "Gita in barca all'Isola di Lobos, snorkeling e grigliata sulla spiaggia." },
+                    { day: "Giorno 4", desc: "Stretching vista oceano, colazione e partenza." }
+                ]
+            }
+        ];
+
+        const defaultBookings = [
+            {
+                code: "#BM-2027-894",
+                title: "Marbella Padel & Wellness Retreat 2027",
+                dates: "14 – 18 Maggio 2027 (4 Giorni / 3 Notti) • Andalusia, Spagna",
+                price: 690,
+                payMode: "3 Rate senza interessi",
+                paidAmount: 230,
+                status: "Confermato • Prima Rata Pagata"
+            }
+        ];
+
+        const defaultChat = [
+            { sender: "Host Alex", role: "admin", text: "Ragazzi ricordatevi di inserire la taglia della maglietta entro venerdì per il pacco gara! 👕🔥" },
+            { sender: "Marco V.", role: "other", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=60&q=80", text: "Qualcuno prende il volo delle 10:30 da Bergamo?" },
+            { sender: "Tu (Elena)", role: "me", text: "Presente! Preso ieri sera, possiamo dividere il taxi fino al resort 🙌" }
+        ];
+
+        // Load State from LocalStorage
+        let eventsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.EVENTS)) || defaultEvents;
+        let bookingsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.BOOKINGS)) || defaultBookings;
+        let chatData = JSON.parse(localStorage.getItem(STORAGE_KEYS.CHAT)) || defaultChat;
+        let selectedEvent = null;
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(eventsData));
+            localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookingsData));
+            localStorage.setItem(STORAGE_KEYS.CHAT, JSON.stringify(chatData));
+        }
+
+        function resetDemoData() {
+            localStorage.removeItem(STORAGE_KEYS.EVENTS);
+            localStorage.removeItem(STORAGE_KEYS.BOOKINGS);
+            localStorage.removeItem(STORAGE_KEYS.CHAT);
+            eventsData = JSON.parse(JSON.stringify(defaultEvents));
+            bookingsData = JSON.parse(JSON.stringify(defaultBookings));
+            chatData = JSON.parse(JSON.stringify(defaultChat));
+            renderAll();
+            showToast("Dati dimostrativi ripristinati allo stato iniziale!");
+        }
+
+        // Render Cards on Explore View
+        function renderEvents(list) {
+            const grid = document.getElementById('events-grid');
+            const countLabel = document.getElementById('results-count');
+            countLabel.textContent = `${list.length} viagg${list.length === 1 ? 'io' : 'i'} disponibil${list.length === 1 ? 'e' : 'i'}`;
+
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white rounded-3xl p-10 text-center border border-slate-200">
+                        <p class="text-slate-500 font-semibold">Nessun viaggio trovato con questi filtri.</p>
+                        <button onclick="resetFilters()" class="mt-3 text-xs font-bold text-brand-500 hover:underline">Mostra tutti i viaggi</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = list.map(ev => `
+                <article onclick="openEventModal(${ev.id})" class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-56 overflow-hidden bg-slate-900">
+                            <img src="${ev.image}" alt="${ev.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/85 via-transparent to-slate-900/20"></div>
+                            
+                            <div class="absolute top-3.5 left-3.5 right-3.5 flex justify-between items-center">
+                                <span class="bg-white/95 backdrop-blur-md text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm">
+                                    ${ev.discipline} • ${ev.format}
+                                </span>
+                                <span class="bg-brand-500 text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">
+                                    Ultimi ${ev.spotsLeft} posti
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-3.5 left-4 right-4 flex items-end justify-between text-white">
+                                <div>
+                                    <p class="text-xs font-semibold text-amber-300 flex items-center gap-1">
+                                        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${ev.city}
+                                    </p>
+                                    <p class="text-[11px] text-slate-200 mt-0.5">${ev.dates}</p>
+                                </div>
+                                <div class="flex items-center gap-1.5 bg-slate-900/75 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15">
+                                    <img src="${ev.hostImg}" class="w-5 h-5 rounded-full object-cover">
+                                    <span class="text-[11px] font-semibold">${ev.hostName}</span>
+                                    <i data-lucide="badge-check" class="w-3.5 h-3.5 text-teal-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-brand-600 transition-colors leading-snug">
+                                ${ev.title}
+                            </h3>
+                            
+                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                ${ev.tags.map(tag => `<span class="text-[11px] font-medium bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">${tag}</span>`).join('')}
+                            </div>
+
+                            <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=60&q=80" class="w-6 h-6 rounded-full object-cover ring-2 ring-white">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=60&q=80" class="w-6 h-6 rounded-full object-cover ring-2 ring-white">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=80" class="w-6 h-6 rounded-full object-cover ring-2 ring-white">
+                                    </div>
+                                    <span class="text-[11px] font-semibold text-slate-500">
+                                        ${Math.max(1, ev.totalSpots - ev.spotsLeft)} già iscritti
+                                    </span>
+                                </div>
+                                <span class="text-[11px] font-bold text-teal-600">Scopri il programma →</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[11px] text-slate-400 block">Tutto incluso da</span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-xl font-extrabold text-slate-900">€ ${ev.price}</span>
+                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">
+                                    o 3 rate da € ${Math.round(ev.price / 3)}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="px-4 py-2 rounded-xl bg-brand-900 group-hover:bg-brand-500 text-white text-xs font-bold transition-colors">
+                            Vedi e Prenota
+                        </span>
+                    </div>
+                </article>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // Render Admin Area
+        function renderAdmin() {
+            const adminList = document.getElementById('admin-events-list');
+            document.getElementById('admin-stat-events').textContent = eventsData.length;
+
+            let totalPax = 0;
+            let totalCapacity = 0;
+            let totalRevenue = 0;
+
+            eventsData.forEach(ev => {
+                const booked = Math.max(0, ev.totalSpots - ev.spotsLeft);
+                totalPax += booked;
+                totalCapacity += ev.totalSpots;
+                totalRevenue += booked * ev.price;
+            });
+
+            document.getElementById('admin-stat-pax').textContent = totalPax;
+            document.getElementById('admin-stat-pax').nextElementSibling.textContent = `Su ${totalCapacity} posti totali`;
+            document.getElementById('admin-stat-revenue').textContent = `€ ${totalRevenue.toLocaleString('it-IT')}`;
+
+            adminList.innerHTML = eventsData.map(ev => {
+                const booked = Math.max(0, ev.totalSpots - ev.spotsLeft);
+                const pct = Math.min(100, Math.round((booked / ev.totalSpots) * 100));
+                return `
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <img src="${ev.image}" class="w-14 h-14 rounded-xl object-cover shrink-0">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-brand-100 text-brand-700">${ev.discipline}</span>
+                                    <span class="text-xs text-slate-400">${ev.city}</span>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-900 mt-0.5">${ev.title}</h4>
+                                <p class="text-[11px] text-slate-500">${ev.dates} • Quota: <strong>€ ${ev.price}</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-2.5 sm:pt-0 border-slate-200">
+                            <div class="text-left sm:text-right">
+                                <span class="text-xs font-extrabold text-slate-900 block">${booked} / ${ev.totalSpots} iscritti</span>
+                                <div class="w-24 bg-slate-200 h-1.5 rounded-full overflow-hidden mt-1">
+                                    <div class="bg-teal-500 h-full" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                            <button onclick="deleteEvent(${ev.id})" title="Rimuovi viaggio" class="p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // Create New Event from Admin Form
+        function createNewEvent(e) {
+            e.preventDefault();
+            const title = document.getElementById('new-title').value.trim();
+            const location = document.getElementById('new-location').value;
+            const city = document.getElementById('new-city').value.trim();
+            const discipline = document.getElementById('new-discipline').value;
+            const format = document.getElementById('new-format').value;
+            const dates = document.getElementById('new-dates').value.trim();
+            const price = parseInt(document.getElementById('new-price').value, 10) || 650;
+            const totalSpots = parseInt(document.getElementById('new-spots').value, 10) || 40;
+            const hostName = document.getElementById('new-host').value.trim();
+            const desc = document.getElementById('new-desc').value.trim();
+
+            const coverImages = {
+                Padel: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=900&q=80",
+                Yoga: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=900&q=80",
+                Fitness: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80",
+                Multisport: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=900&q=80"
+            };
+
+            const newEv = {
+                id: Date.now(),
+                title,
+                location,
+                city,
+                dates,
+                discipline,
+                format,
+                price,
+                spotsLeft: totalSpots,
+                totalSpots: totalSpots,
+                image: coverImages[discipline] || coverImages.Padel,
+                hostName,
+                hostRole: "Staff Ufficiale Bodymovement",
+                hostImg: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=120&q=80",
+                tags: [discipline, "Nuova Data", "Gruppo Verificato"],
+                timeline: [
+                    { day: "Giorno 1", desc: "Arrivo nella struttura partner, check-in, consegna kit tecnico e aperitivo di benvenuto." },
+                    { day: "Programma Centrale", desc: desc },
+                    { day: "Ultimo Giorno", desc: "Sessione mattutina, premiazioni, colazione insieme e rientro." }
+                ]
+            };
+
+            eventsData.unshift(newEv);
+            saveState();
+            renderAll();
+            e.target.reset();
+            showToast(`"${title}" pubblicato! Ora lo trovi in Esplora Viaggi.`);
+            switchTab('explore');
+        }
+
+        function deleteEvent(id) {
+            if (eventsData.length <= 1) {
+                showToast("Deve rimanere almeno un viaggio attivo in catalogo.");
+                return;
+            }
+            eventsData = eventsData.filter(ev => ev.id !== id);
+            saveState();
+            renderAll();
+            showToast("Viaggio rimosso dal catalogo.");
+        }
+
+        // Render User Bookings
+        function renderBookings() {
+            const list = document.getElementById('user-bookings-list');
+            const badge = document.getElementById('booking-badge');
+            badge.textContent = bookingsData.length;
+
+            list.innerHTML = bookingsData.map(bk => {
+                const progressPct = Math.min(100, Math.round((bk.paidAmount / bk.price) * 100));
+                return `
+                    <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col sm:flex-row gap-6 justify-between">
+                        <div class="space-y-3 flex-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">${bk.status}</span>
+                                <span class="text-xs text-slate-400 font-mono">${bk.code}</span>
+                            </div>
+                            <h3 class="text-xl font-extrabold text-slate-900">${bk.title}</h3>
+                            <p class="text-xs text-slate-600 flex items-center gap-1.5">
+                                <i data-lucide="calendar" class="w-4 h-4 text-brand-500 shrink-0"></i> ${bk.dates}
+                            </p>
+                            
+                            <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span class="text-slate-600">Quota Totale (${bk.payMode}):</span>
+                                    <span class="text-slate-900 font-bold">€ ${bk.price},00</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full" style="width: ${progressPct}%"></div>
+                                </div>
+                                <div class="flex justify-between items-center text-[11px]">
+                                    <span class="text-emerald-700 font-semibold">✓ Versato: € ${bk.paidAmount}</span>
+                                    <span class="text-slate-500">${progressPct === 100 ? 'Saldato al 100%' : 'Prossima scadenza prima della partenza'}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <button onclick="switchTab('community')" class="text-xs font-bold bg-brand-900 text-white px-4 py-2 rounded-xl hover:bg-slate-800 transition-colors">
+                                    Chat del Gruppo
+                                </button>
+                                <button onclick="showToast('Voucher PDF e Assicurazione Viaggio scaricati!')" class="text-xs font-bold bg-slate-100 text-slate-700 px-4 py-2 rounded-xl hover:bg-slate-200 transition-colors">
+                                    Scarica Documenti
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-900 text-white p-5 rounded-2xl flex flex-col items-center justify-center text-center sm:w-44 shrink-0">
+                        <div class="flex items-center gap-1.5 mb-2">
+                            <img src="./logo.png" alt="BM" onerror="this.onerror=null; this.src='https://placehold.co/64x64/ff521b/ffffff?text=BM';" class="w-5 h-5 rounded object-cover scale-[1.2]">
+                            <span class="text-[10px] font-extrabold tracking-wider uppercase text-slate-300">Bodymovement</span>
+                        </div>
+                        <div class="bg-white p-2.5 rounded-xl mb-2.5">
+                            <svg class="w-24 h-24 text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                                    <rect x="10" y="10" width="25" height="25" rx="3" fill="none" stroke="currentColor" stroke-width="6"/>
+                                    <rect x="17" y="17" width="11" height="11"/>
+                                    <rect x="65" y="10" width="25" height="25" rx="3" fill="none" stroke="currentColor" stroke-width="6"/>
+                                    <rect x="72" y="17" width="11" height="11"/>
+                                    <rect x="10" y="65" width="25" height="25" rx="3" fill="none" stroke="currentColor" stroke-width="6"/>
+                                    <rect x="17" y="72" width="11" height="11"/>
+                                    <rect x="45" y="12" width="8" height="8"/>
+                                    <rect x="45" y="28" width="8" height="16"/>
+                                    <rect x="12" y="45" width="16" height="8"/>
+                                    <rect x="36" y="45" width="24" height="8"/>
+                                    <rect x="68" y="45" width="20" height="8"/>
+                                    <rect x="45" y="65" width="12" height="12"/>
+                                    <rect x="65" y="65" width="8" height="24"/>
+                                    <rect x="80" y="72" width="10" height="17"/>
+                                </svg>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold">Pass Check-in</span>
+                            <span class="text-xs font-semibold mt-0.5">Elena Rossi</span>
+                            <span class="text-[10px] text-slate-400 mt-1">Posto Confermato</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // Render Group Chat
+        function renderChat() {
+            const box = document.getElementById('chat-messages');
+            box.innerHTML = chatData.map(msg => {
+                if (msg.role === 'admin') {
+                    return `
+                        <div class="bg-amber-50 border border-amber-200 text-amber-900 p-2.5 rounded-xl text-[11px]">
+                            <strong>${msg.sender}:</strong> ${msg.text}
+                        </div>
+                    `;
+                } else if (msg.role === 'me') {
+                    return `
+                        <div class="flex gap-2 justify-end">
+                            <div class="bg-brand-500 text-white p-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[80%]">
+                                <p class="font-bold text-brand-100 text-[11px]">${msg.sender}</p>
+                                <p class="mt-0.5">${msg.text}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="flex gap-2">
+                            <img src="${msg.avatar}" class="w-7 h-7 rounded-full object-cover shrink-0">
+                            <div class="bg-white p-2.5 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm max-w-[80%]">
+                                <p class="font-bold text-slate-800 text-[11px]">${msg.sender}</p>
+                                <p class="text-slate-600 mt-0.5">${msg.text}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+            box.scrollTop = box.scrollHeight;
+        }
+
+        // Parametric Filtering
+        function filterEvents() {
+            const loc = document.getElementById('filter-location').value;
+            const disc = document.getElementById('filter-discipline').value;
+            const form = document.getElementById('filter-format').value;
+
+            const filtered = eventsData.filter(ev => {
+                const matchLoc = loc === 'all' || ev.location === loc;
+                const matchDisc = disc === 'all' || ev.discipline === disc;
+                const matchForm = form === 'all' || ev.format === form;
+                return matchLoc && matchDisc && matchForm;
+            });
+
+            renderEvents(filtered);
+        }
+
+        function quickDiscipline(disc, btnEl) {
+            document.getElementById('filter-discipline').value = disc;
+            document.querySelectorAll('.pill-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-900', 'text-white', 'font-bold');
+                btn.classList.add('bg-white', 'text-slate-700', 'font-semibold');
+            });
+            if (btnEl) {
+                btnEl.classList.remove('bg-white', 'text-slate-700', 'font-semibold');
+                btnEl.classList.add('bg-slate-900', 'text-white', 'font-bold');
+            }
+            filterEvents();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-location').value = 'all';
+            document.getElementById('filter-discipline').value = 'all';
+            document.getElementById('filter-format').value = 'all';
+            renderEvents(eventsData);
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            ['explore', 'community', 'workouts', 'bookings', 'admin'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                if (navBtn && t !== 'admin') {
+                    navBtn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm', 'font-semibold');
+                    navBtn.classList.add('text-slate-600', 'font-medium');
+                }
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabName}`);
+            if (activeBtn && tabName !== 'admin') {
+                activeBtn.classList.add('bg-white', 'text-slate-900', 'shadow-sm', 'font-semibold');
+                activeBtn.classList.remove('text-slate-600', 'font-medium');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Event Detail & Checkout Modal
+        function openEventModal(id) {
+            selectedEvent = eventsData.find(e => e.id === id);
+            if (!selectedEvent) return;
+
+            document.getElementById('modal-img').src = selectedEvent.image;
+            document.getElementById('modal-badge').textContent = `${selectedEvent.discipline} • ${selectedEvent.format}`;
+            document.getElementById('modal-spots').textContent = `🔥 Solo ${selectedEvent.spotsLeft} posti rimasti`;
+            document.getElementById('modal-title').textContent = selectedEvent.title;
+            document.getElementById('modal-subtitle').innerHTML = `<i data-lucide="map-pin" class="w-4 h-4 text-brand-400"></i> ${selectedEvent.city} • ${selectedEvent.dates}`;
+            
+            document.getElementById('modal-host-img').src = selectedEvent.hostImg;
+            document.getElementById('modal-host-name').textContent = selectedEvent.hostName;
+            document.getElementById('modal-host-role').textContent = selectedEvent.hostRole;
+            document.getElementById('modal-booked-count').textContent = `+${Math.max(1, selectedEvent.totalSpots - selectedEvent.spotsLeft)}`;
+            
+            document.getElementById('modal-price').textContent = `€ ${selectedEvent.price}`;
+            document.getElementById('modal-installment-text').textContent = `Subito € ${Math.round(selectedEvent.price / 3)} con Klarna / Scalapay`;
+            document.getElementById('modal-deposit-text').textContent = `Subito € ${Math.round(selectedEvent.price * 0.3)} • Saldo 30 gg prima`;
+
+            document.getElementById('modal-timeline').innerHTML = selectedEvent.timeline.map(item => `
+                <div class="relative">
+                    <div class="w-2.5 h-2.5 rounded-full bg-brand-500 absolute -left-[21px] top-1.5 ring-4 ring-white"></div>
+                    <h5 class="text-xs font-extrabold text-slate-900">${item.day}</h5>
+                    <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${item.desc}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('event-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeEventModal() {
+            document.getElementById('event-modal').classList.add('hidden');
+        }
+
+        function confirmBooking() {
+            if (!selectedEvent) return;
+            const chosenMode = document.querySelector('input[name="pay_mode"]:checked')?.value || '3 Rate senza interessi';
+            
+            let paidNow = selectedEvent.price;
+            if (chosenMode.includes('Rate')) paidNow = Math.round(selectedEvent.price / 3);
+            if (chosenMode.includes('Acconto')) paidNow = Math.round(selectedEvent.price * 0.3);
+
+            // Decrement spots on event
+            if (selectedEvent.spotsLeft > 1) {
+                selectedEvent.spotsLeft -= 1;
+            }
+
+            // Save new booking
+            bookingsData.unshift({
+                code: `#BM-2027-${Math.floor(100 + Math.random() * 899)}`,
+                title: selectedEvent.title,
+                dates: `${selectedEvent.dates} • ${selectedEvent.city}`,
+                price: selectedEvent.price,
+                payMode: chosenMode,
+                paidAmount: paidNow,
+                status: "Confermato • Posto Bloccato"
+            });
+
+            saveState();
+            renderAll();
+            closeEventModal();
+
+            const badge = document.getElementById('booking-badge');
+            badge.classList.replace('bg-slate-200', 'bg-brand-500');
+            badge.classList.replace('text-slate-700', 'text-white');
+
+            showToast(`Posto bloccato per ${selectedEvent.title}!`);
+            switchTab('bookings');
+        }
+
+        // Group Chat Interaction
+        function sendChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            chatData.push({
+                sender: "Tu (Elena)",
+                role: "me",
+                text: text
+            });
+            saveState();
+            renderChat();
+            input.value = '';
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3400);
+        }
+
+        function renderAll() {
+            renderEvents(eventsData);
+            renderAdmin();
+            renderBookings();
+            renderChat();
+        }
+
+        // Init
+        window.onload = function() {
+            renderAll();
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
